@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 export const MyContext = createContext([]);
@@ -18,7 +18,9 @@ function Provider({ children }) {
     fetchData();
   }, []);
 
-  const contextValue = data;
+  const [query, setQuery] = useState('');
+
+  const contextValue = useMemo(() => ({ data, setData, query, setQuery }));
   return (
     <MyContext.Provider value={ contextValue }>
       {children}
