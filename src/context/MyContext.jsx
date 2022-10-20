@@ -20,7 +20,7 @@ function Provider({ children }) {
 
   const [query, setQuery] = useState('');
 
-  const contextValue = useMemo(() => ({ data, setData, query, setQuery }));
+  const contextValue = useMemo(() => ({ data, setData, query, setQuery }), [data, query]);
   return (
     <MyContext.Provider value={ contextValue }>
       {children}
