@@ -2,12 +2,13 @@ import React, { useContext, useState } from 'react';
 import { MyContext } from '../context/MyContext';
 
 function Filters() {
-  const { query, setQuery, data, setData } = useContext(MyContext);
+  const { query, setQuery, data, setData, columns, setColumns } = useContext(MyContext);
   const [filters, setFilters] = useState({
     column: 'population',
     comparison: 'maior que',
     value: 0,
   });
+
   const handleTextFilter = (event) => {
     setQuery(event.target.value);
   };
@@ -22,23 +23,18 @@ function Filters() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const { column, comparison, value } = filters;
-    console.log(column, comparison, value);
+    const excludeColumn = columns.filter((e) => e !== column);
     const filterData = data.filter((e) => {
-      console.log(e);
       switch (comparison) {
       case 'maior que':
-        console.log(e[column]);
-        console.log(Number(value));
         return Number(e[column]) > Number(value);
       case 'menor que':
-        console.log(e[column]);
         return Number(e[column]) < Number(value);
       default:
-        console.log('valor da coluna', e[column]);
-        console.log('valor do numero', Number(value));
         return Number(e[column]) === Number(value);
       }
     });
+    setColumns(excludeColumn);
     setData(filterData);
   };
 
@@ -56,11 +52,12 @@ function Filters() {
         onChange={ handleFilters }
         name="column"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { columns.map((e, index) => (
+          <option value={ e } key={ index }>
+            {' '}
+            { e }
+            {' '}
+          </option>)) }
       </select>
       <select
         data-testid="comparison-filter"
