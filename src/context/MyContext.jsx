@@ -20,11 +20,8 @@ function Provider({ children }) {
   }, []);
 
   const [query, setQuery] = useState('');
-  const [columns, setColumns] = useState(['population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water']);
+  const [columns, setColumns] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
   const contextValue = useMemo(() => ({ data,
     setData,

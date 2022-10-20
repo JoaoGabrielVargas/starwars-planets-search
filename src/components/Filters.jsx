@@ -53,11 +53,7 @@ function Filters() {
         name="column"
       >
         { columns.map((e, index) => (
-          <option value={ e } key={ index }>
-            {' '}
-            { e }
-            {' '}
-          </option>)) }
+          <option value={ e } key={ index }>{ e }</option>)) }
       </select>
       <select
         data-testid="comparison-filter"
