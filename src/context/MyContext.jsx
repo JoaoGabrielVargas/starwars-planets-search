@@ -6,6 +6,7 @@ export const MyContext = createContext([]);
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [filtered, setFiltered] = useState([]);
 
   useEffect(() => {
     const setPlanets = async () => {
@@ -17,7 +18,27 @@ function Provider({ children }) {
       setData(results);
     };
     setPlanets();
-  }, []);
+  }, [setData]);
+
+  const getDataByFilters = (planets, filters) => {
+    const newPlanetList = planets.filter(
+      (planet) => filters.some((filter) => {
+        switch (filter.comparison) {
+        case 'menor que':
+          return planet[filter.column] < Number(filter.value);
+        case 'igual a':
+          return planet[filter.column] === filter.value;
+        default:
+          return planet[filter.column] > Number(filter.value);
+        }
+      }),
+    );
+    setFiltered(newPlanetList);
+  };
+
+  useEffect(() => {
+    setFiltered(data);
+  }, [data]);
 
   const [query, setQuery] = useState('');
   const [columns, setColumns] = useState([
@@ -28,7 +49,10 @@ function Provider({ children }) {
     query,
     setQuery,
     columns,
-    setColumns }), [data, query, columns]);
+    setColumns,
+    filtered,
+    setFiltered,
+    getDataByFilters }), [data, query, columns, filtered]);
   return (
     <MyContext.Provider value={ contextValue }>
       {children}

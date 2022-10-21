@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { MyContext } from '../context/MyContext';
 
 function Table() {
-  const { data, query } = useContext(MyContext);
+  const { query, filtered } = useContext(MyContext);
   return (
     <table>
       <thead>
@@ -23,7 +23,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.length > 0 && data.filter((e) => e.name.includes(query)).map((e) => (
+        { filtered.filter((e) => e.name.includes(query)).map((e) => (
           <tr key={ e.name }>
             <td>
               { e.name }
