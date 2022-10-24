@@ -123,7 +123,7 @@ function Filters() {
         type="number"
         data-testid="value-filter"
         onChange={ handleChange }
-        value={ filters.value || '' }
+        value={ filters.value }
         name="value"
       />
       <input type="submit" data-testid="button-filter" value="Filtrar" />
