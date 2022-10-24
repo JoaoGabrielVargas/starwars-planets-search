@@ -67,7 +67,6 @@ function Filters() {
   };
 
   const handleRemove = (column) => {
-    console.log(filtersToRender);
     const filterToDelete = filtersToRender.filter((e) => e.column !== column);
     setFiltersToRender(filterToDelete);
     setFilters(filterToDelete);
@@ -229,7 +228,11 @@ function Filters() {
                 {' '}
                 {e.value}
                 {' '}
-                <button type="button" onClick={ () => handleRemove(e.column) }>
+                <button
+                  type="button"
+                  data-testid="btn-delete-filter"
+                  onClick={ () => handleRemove(e.column) }
+                >
                   X
                 </button>
               </span>
