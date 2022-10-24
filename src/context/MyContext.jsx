@@ -20,22 +20,6 @@ function Provider({ children }) {
     setPlanets();
   }, [setData]);
 
-  const getDataByFilters = (planets, filters) => {
-    const newPlanetList = planets.filter(
-      (planet) => filters.some((filter) => {
-        switch (filter.comparison) {
-        case 'menor que':
-          return planet[filter.column] < Number(filter.value);
-        case 'igual a':
-          return planet[filter.column] === filter.value;
-        default:
-          return planet[filter.column] > Number(filter.value);
-        }
-      }),
-    );
-    setFiltered(newPlanetList);
-  };
-
   useEffect(() => {
     setFiltered(data);
   }, [data]);
@@ -51,8 +35,7 @@ function Provider({ children }) {
     columns,
     setColumns,
     filtered,
-    setFiltered,
-    getDataByFilters }), [data, query, columns, filtered]);
+    setFiltered }), [data, query, columns, filtered]);
   return (
     <MyContext.Provider value={ contextValue }>
       {children}
